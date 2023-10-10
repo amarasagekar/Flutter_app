@@ -12,4 +12,8 @@ class Helper {
   static String getAssetName(String fileName, String type) {
     return "assets/images/$type/$fileName";
   }
+
+  static TextTheme getTheme(BuildContext context) {
+    return Theme.of(context).textTheme;
+  }
 }

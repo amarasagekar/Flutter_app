@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/forgetPwScreen.dart';
+import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
+import 'package:food_delivery/screens/newPwScreen.dart';
+import 'package:food_delivery/screens/sentOTPScreen.dart';
 import './screens/splashScreen.dart';
 import './screens/loginScreen.dart';
+import './screens/singUpScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +36,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
+          headline6: TextStyle(
+            color: AppColor.placeholder,
+            fontSize: 25,
+          ),
           bodyText2: TextStyle(
             color: AppColor.secondary,
           ),
@@ -40,6 +49,11 @@ class MyApp extends StatelessWidget {
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
+        SignUpScreen.routeName: (context) => SignUpScreen(),
+        ForgetPwScreen.routeName: (context) => ForgetPwScreen(),
+        SendOTPScreen.routeName: (context) => SendOTPScreen(),
+        NewPwScreen.routename: (context) => NewPwScreen(),
+        IntroScreen.routeName: (context) => IntroScreen(),
       },
     );
   }
