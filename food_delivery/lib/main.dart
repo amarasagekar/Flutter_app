@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
 import 'package:food_delivery/screens/forgetPwScreen.dart';
+import 'package:food_delivery/screens/homeScreen.dart';
 import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
 import 'package:food_delivery/screens/newPwScreen.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         SendOTPScreen.routeName: (context) => SendOTPScreen(),
         NewPwScreen.routename: (context) => NewPwScreen(),
         IntroScreen.routeName: (context) => IntroScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
       },
     );
   }
