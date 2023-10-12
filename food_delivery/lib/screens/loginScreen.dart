@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/screens/forgetPwScreen.dart';
+import 'package:food_delivery/screens/homeScreen.dart';
 import 'package:food_delivery/utils/helper.dart';
 import '../const/colors.dart';
 import './singUpScreen.dart';
@@ -40,7 +41,10 @@ class LoginScreen extends StatelessWidget {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeScreen.routeName);
+                    },
                     child: Text("Login"),
                   ),
                 ),

@@ -4,11 +4,15 @@ import 'package:food_delivery/screens/forgetPwScreen.dart';
 import 'package:food_delivery/screens/homeScreen.dart';
 import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
+import 'package:food_delivery/screens/menuScreen.dart';
 import 'package:food_delivery/screens/newPwScreen.dart';
 import 'package:food_delivery/screens/sentOTPScreen.dart';
 import './screens/splashScreen.dart';
 import './screens/loginScreen.dart';
 import './screens/singUpScreen.dart';
+import 'screens/moreScreen.dart';
+import 'screens/offerScreen.dart';
+import 'screens/profileScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,9 +40,29 @@ class MyApp extends StatelessWidget {
             elevation: MaterialStateProperty.all(0),
           ),
         ),
-        textTheme: TextTheme(
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(AppColor.orange),
+          ),
+        ),
+        textTheme: const TextTheme(
+          headline3: TextStyle(
+            color: AppColor.primary,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          headline4: TextStyle(
+            color: AppColor.secondary,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          headline5: TextStyle(
+            color: AppColor.primary,
+            fontWeight: FontWeight.normal,
+            fontSize: 25,
+          ),
           headline6: TextStyle(
-            color: AppColor.placeholder,
+            color: AppColor.primary,
             fontSize: 25,
           ),
           bodyText2: TextStyle(
@@ -56,6 +80,10 @@ class MyApp extends StatelessWidget {
         NewPwScreen.routename: (context) => NewPwScreen(),
         IntroScreen.routeName: (context) => IntroScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        MenuScreen.routeName: (context) => MenuScreen(),
+        OfferScreen.routeName: (context) => OfferScreen(),
+        MoreScreen.routeName: (context) => MoreScreen(),
+        ProfileScreen.routeName: (context) => ProfileScreen(),
       },
     );
   }
