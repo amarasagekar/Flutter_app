@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/dessertScreen.dart';
 import 'package:food_delivery/screens/forgetPwScreen.dart';
 import 'package:food_delivery/screens/homeScreen.dart';
 import 'package:food_delivery/screens/introScreen.dart';
@@ -10,6 +11,7 @@ import 'package:food_delivery/screens/sentOTPScreen.dart';
 import './screens/splashScreen.dart';
 import './screens/loginScreen.dart';
 import './screens/singUpScreen.dart';
+import 'screens/individualItem.dart';
 import 'screens/moreScreen.dart';
 import 'screens/offerScreen.dart';
 import 'screens/profileScreen.dart';
@@ -84,6 +86,8 @@ class MyApp extends StatelessWidget {
         OfferScreen.routeName: (context) => OfferScreen(),
         MoreScreen.routeName: (context) => MoreScreen(),
         ProfileScreen.routeName: (context) => ProfileScreen(),
+        DesertScreen.routeName: (context) => DesertScreen(),
+        IndividualScreen.routeName: (context) => IndividualScreen(),
       },
     );
   }

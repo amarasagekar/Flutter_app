@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/individualItem.dart';
 import 'package:food_delivery/utils/helper.dart';
 import 'package:food_delivery/widgets/customNavBar.dart';
+import 'package:food_delivery/widgets/searchBar.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = "/homeScreen";
@@ -72,33 +74,7 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: ShapeDecoration(
-                        shape: StadiumBorder(),
-                        color: AppColor.placeholderBg,
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Image.asset(
-                            Helper.getAssetName("search_filled.png", "virtual"),
-                          ),
-                          hintText: "Search Food",
-                          hintStyle: TextStyle(
-                            color: AppColor.placeholder,
-                            fontSize: 18,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                            top: 17,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  SearchBar(),
                   SizedBox(
                     height: 20,
                   ),
@@ -286,12 +262,18 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        RecentItem(
-                          image: Image.asset(
-                            Helper.getAssetName("pizza3.jpg", "real"),
-                            fit: BoxFit.cover,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(IndividualScreen.routeName);
+                          },
+                          child: RecentItem(
+                            image: Image.asset(
+                              Helper.getAssetName("pizza3.jpg", "real"),
+                              fit: BoxFit.cover,
+                            ),
+                            name: "Mulberry Pizza by Josh",
                           ),
-                          name: "Mulberry Pizza by Josh",
                         ),
                         RecentItem(
                             image: Image.asset(
