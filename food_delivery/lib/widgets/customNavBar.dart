@@ -150,7 +150,7 @@ class CustomNavBar extends StatelessWidget {
                                 ),
                           more
                               ? Text(
-                                  "Profile",
+                                  "More",
                                   style: TextStyle(color: AppColor.orange),
                                 )
                               : Text("More"),

@@ -7,6 +7,7 @@ import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
 import 'package:food_delivery/screens/menuScreen.dart';
 import 'package:food_delivery/screens/newPwScreen.dart';
+import 'package:food_delivery/screens/paymentScreen.dart';
 import 'package:food_delivery/screens/sentOTPScreen.dart';
 import './screens/splashScreen.dart';
 import './screens/loginScreen.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
         ProfileScreen.routeName: (context) => ProfileScreen(),
         DesertScreen.routeName: (context) => DesertScreen(),
         IndividualScreen.routeName: (context) => IndividualScreen(),
+        PaymentScreen.routeName: (context) => PaymentScreen(),
       },
     );
   }
