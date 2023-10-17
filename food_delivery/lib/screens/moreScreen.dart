@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/aboutScreen.dart';
+import 'package:food_delivery/screens/inboxScreen.dart';
+import 'package:food_delivery/screens/notificationScreen.dart';
 import 'package:food_delivery/screens/paymentScreen.dart';
 import 'package:food_delivery/utils/helper.dart';
 import 'package:food_delivery/widgets/customNavBar.dart';
@@ -69,7 +72,7 @@ class MoreScreen extends StatelessWidget {
                       isNoti: true,
                       handler: () {
                         Navigator.of(context)
-                            .pushNamed(PaymentScreen.routeName);
+                            .pushNamed(NotificationScreen.routeName);
                       },
                     ),
                     SizedBox(
@@ -82,7 +85,7 @@ class MoreScreen extends StatelessWidget {
                       ),
                       handler: () {
                         Navigator.of(context)
-                            .pushNamed(PaymentScreen.routeName);
+                            .pushNamed(InboxScreen.routeName);
                       },
                     ),
                     SizedBox(
@@ -94,8 +97,7 @@ class MoreScreen extends StatelessWidget {
                         Helper.getAssetName("info.png", "virtual"),
                       ),
                       handler: () {
-                        Navigator.of(context)
-                            .pushNamed(PaymentScreen.routeName);
+                        Navigator.of(context).pushNamed(AboutScreen.routeName);
                       },
                     ),
                     SizedBox(

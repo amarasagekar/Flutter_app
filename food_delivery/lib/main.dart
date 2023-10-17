@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/aboutScreen.dart';
 import 'package:food_delivery/screens/dessertScreen.dart';
 import 'package:food_delivery/screens/forgetPwScreen.dart';
 import 'package:food_delivery/screens/homeScreen.dart';
+import 'package:food_delivery/screens/inboxScreen.dart';
 import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
 import 'package:food_delivery/screens/menuScreen.dart';
 import 'package:food_delivery/screens/newPwScreen.dart';
+import 'package:food_delivery/screens/notificationScreen.dart';
 import 'package:food_delivery/screens/paymentScreen.dart';
 import 'package:food_delivery/screens/sentOTPScreen.dart';
 import './screens/splashScreen.dart';
@@ -90,6 +93,9 @@ class MyApp extends StatelessWidget {
         DesertScreen.routeName: (context) => DesertScreen(),
         IndividualScreen.routeName: (context) => IndividualScreen(),
         PaymentScreen.routeName: (context) => PaymentScreen(),
+        NotificationScreen.routeName: (context) => NotificationScreen(),
+        AboutScreen.routeName: (context) => AboutScreen(),
+        InboxScreen.routeName:(context) => InboxScreen(),
       },
     );
   }

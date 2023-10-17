@@ -4,10 +4,13 @@ import '../const/colors.dart';
 class CustomTextInput extends StatelessWidget {
   const CustomTextInput({
     @required String hintText = "",
+    EdgeInsets padding = const EdgeInsets.only(left: 40),
     super.key,
-  }) : _hintText = hintText;
+  })  : _hintText = hintText,
+        _padding = padding;
 
   final String _hintText;
+  final EdgeInsets _padding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class CustomTextInput extends StatelessWidget {
           hintStyle: TextStyle(
             color: AppColor.placeholder,
           ),
-          contentPadding: const EdgeInsets.only(left: 40),
+          contentPadding: _padding,
         ),
       ),
     );
