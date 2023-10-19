@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
 import 'package:food_delivery/screens/aboutScreen.dart';
 import 'package:food_delivery/screens/inboxScreen.dart';
+import 'package:food_delivery/screens/myOrderScreen.dart';
 import 'package:food_delivery/screens/notificationScreen.dart';
 import 'package:food_delivery/screens/paymentScreen.dart';
 import 'package:food_delivery/utils/helper.dart';
@@ -58,7 +59,7 @@ class MoreScreen extends StatelessWidget {
                       ),
                       handler: () {
                         Navigator.of(context)
-                            .pushNamed(PaymentScreen.routeName);
+                            .pushNamed(MyOrderScreen.routeName);
                       },
                     ),
                     SizedBox(
@@ -84,8 +85,7 @@ class MoreScreen extends StatelessWidget {
                         Helper.getAssetName("mail.png", "virtual"),
                       ),
                       handler: () {
-                        Navigator.of(context)
-                            .pushNamed(InboxScreen.routeName);
+                        Navigator.of(context).pushNamed(InboxScreen.routeName);
                       },
                     ),
                     SizedBox(

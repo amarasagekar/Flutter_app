@@ -8,6 +8,7 @@ import 'package:food_delivery/screens/inboxScreen.dart';
 import 'package:food_delivery/screens/introScreen.dart';
 import 'package:food_delivery/screens/landingScreen.dart';
 import 'package:food_delivery/screens/menuScreen.dart';
+import 'package:food_delivery/screens/myOrderScreen.dart';
 import 'package:food_delivery/screens/newPwScreen.dart';
 import 'package:food_delivery/screens/notificationScreen.dart';
 import 'package:food_delivery/screens/paymentScreen.dart';
@@ -96,6 +97,7 @@ class MyApp extends StatelessWidget {
         NotificationScreen.routeName: (context) => NotificationScreen(),
         AboutScreen.routeName: (context) => AboutScreen(),
         InboxScreen.routeName:(context) => InboxScreen(),
+        MyOrderScreen.routeName:(context) => MyOrderScreen(),
       },
     );
   }
