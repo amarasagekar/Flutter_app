@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
 import 'package:food_delivery/screens/aboutScreen.dart';
+import 'package:food_delivery/screens/checkoutScreen.dart';
 import 'package:food_delivery/screens/dessertScreen.dart';
 import 'package:food_delivery/screens/forgetPwScreen.dart';
 import 'package:food_delivery/screens/homeScreen.dart';
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
         AboutScreen.routeName: (context) => AboutScreen(),
         InboxScreen.routeName:(context) => InboxScreen(),
         MyOrderScreen.routeName:(context) => MyOrderScreen(),
+        CheckoutScreen.routeName:(context) => CheckoutScreen(),
       },
     );
   }

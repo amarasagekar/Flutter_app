@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/checkoutScreen.dart';
 import 'package:food_delivery/utils/helper.dart';
 import 'package:food_delivery/widgets/customNavBar.dart';
 
@@ -270,7 +271,10 @@ class MyOrderScreen extends StatelessWidget {
                         height: 50,
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(CheckoutScreen.routeName);
+                          },
                           child: Text(
                             "Checkout",
                           ),
