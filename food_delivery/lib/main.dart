@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/const/colors.dart';
+import 'package:food_delivery/screens/ChangeAddress.dart';
 import 'package:food_delivery/screens/aboutScreen.dart';
 import 'package:food_delivery/screens/checkoutScreen.dart';
 import 'package:food_delivery/screens/dessertScreen.dart';
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
         InboxScreen.routeName:(context) => InboxScreen(),
         MyOrderScreen.routeName:(context) => MyOrderScreen(),
         CheckoutScreen.routeName:(context) => CheckoutScreen(),
+        ChangeAddressScreen.routeName:(context) => ChangeAddressScreen(),
       },
     );
   }

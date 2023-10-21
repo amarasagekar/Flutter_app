@@ -3,6 +3,8 @@ import 'package:food_delivery/const/colors.dart';
 import 'package:food_delivery/utils/helper.dart';
 
 class SearchBar extends StatelessWidget {
+  final String title;
+  SearchBar({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +22,7 @@ class SearchBar extends StatelessWidget {
             prefixIcon: Image.asset(
               Helper.getAssetName("search_filled.png", "virtual"),
             ),
-            hintText: "Search Food",
+            hintText: title,
             hintStyle: TextStyle(
               color: AppColor.placeholder,
               fontSize: 18,

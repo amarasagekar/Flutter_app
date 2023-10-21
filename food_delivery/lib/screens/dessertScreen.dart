@@ -53,7 +53,9 @@ class DesertScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  SearchBar(),
+                  SearchBar(
+                    title: "Search Food",
+                  ),
                   SizedBox(
                     height: 15,
                   ),
