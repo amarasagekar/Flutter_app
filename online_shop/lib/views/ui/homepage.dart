@@ -111,8 +111,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   controller: _tabController,
                   children: [
                     HomeWidget(male: _male),
-                    HomeWidget(male: _male),
-                    HomeWidget(male: _male),
+                    HomeWidget(male: _female),
+                    HomeWidget(male: _kids),
                   ],
                 ),
               ),

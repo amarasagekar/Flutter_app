@@ -4,6 +4,7 @@ import 'package:online_shop/controllers/mainscreen_provider.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/ui/cartpage.dart';
 import 'package:online_shop/views/ui/homepage.dart';
+import 'package:online_shop/views/ui/product_by_cart.dart';
 import 'package:online_shop/views/ui/profile.dart';
 import 'package:online_shop/views/ui/searchpage.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class MainScreen extends StatelessWidget {
   List<Widget> pageList = const [
     HomePage(),
     SearchPage(),
-    HomePage(),
+    ProductByCart(),
     CartPage(),
     ProfilePage()
   ];
