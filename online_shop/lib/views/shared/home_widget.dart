@@ -4,13 +4,15 @@ import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/shared/new_shoes.dart';
 import 'package:online_shop/views/shared/product_card.dart';
 import 'package:online_shop/views/ui/product_by_cart.dart';
+import 'package:online_shop/views/ui/product_page.dart';
 
 import '../../models/sneaker_model.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
     super.key,
-    required Future<List<Sneakers>> male, required this.tabIndex,
+    required Future<List<Sneakers>> male,
+    required this.tabIndex,
   }) : _male = male;
 
   final Future<List<Sneakers>> _male;
@@ -35,12 +37,23 @@ class HomeWidget extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     final shoe = snapshot.data![index];
-                    return ProductCard(
-                      price: "\$${shoe.price}",
-                      category: shoe.category,
-                      id: shoe.id,
-                      name: shoe.name,
-                      image: shoe.imageUrl[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Productpage(
+                                id: shoe.id, category: shoe.category),
+                          ),
+                        );
+                      },
+                      child: ProductCard(
+                        price: "\$${shoe.price}",
+                        category: shoe.category,
+                        id: shoe.id,
+                        name: shoe.name,
+                        image: shoe.imageUrl[0],
+                      ),
                     );
                   },
                 );
