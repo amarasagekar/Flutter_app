@@ -41,8 +41,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_slidable: ^3.0.0
   flutter_screenutil: ^5.7.0
-  hive:
-  hive_flutter:
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   provider: ^6.0.5
 
 dev_dependencies:

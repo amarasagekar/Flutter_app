@@ -1,13 +1,20 @@
 // @dart=2.17
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:online_shop/controllers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/mainscreen_provider.dart';
 import 'views/ui/mainscreen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  await Hive.openBox('cart_box');
+  await Hive.openBox('fav_box');
+
   runApp(
     MultiProvider(
       providers: [
@@ -17,7 +24,6 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => ProductNotifier(),
         ),
-
       ],
       child: const MyApp(),
     ),

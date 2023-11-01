@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive/hive.dart';
 import 'package:online_shop/controllers/product_provider.dart';
 import 'package:online_shop/services/helper.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/sneaker_model.dart';
+import '../shared/checkout_btn.dart';
 
 class Productpage extends StatefulWidget {
   const Productpage({super.key, required this.id, required this.category});
@@ -21,6 +23,8 @@ class Productpage extends StatefulWidget {
 
 class _ProductpageState extends State<Productpage> {
   final PageController pageController = PageController();
+  final _cartBox = Hive.box('cart_box');
+
   late Future<Sneakers> _sneaker;
 
   void getShoes() {
@@ -31,6 +35,10 @@ class _ProductpageState extends State<Productpage> {
     } else {
       _sneaker = Helper().getKidsSneakersById(widget.id);
     }
+  }
+
+  Future<void> _createCart(Map<String, dynamic> newCart) async {
+    await _cartBox.add(newCart);
   }
 
   @override
@@ -66,6 +74,7 @@ class _ProductpageState extends State<Productpage> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
+                                productNotifier.shoeSizes.clear();
                               },
                               child: const Icon(
                                 AntDesign.close,
@@ -258,7 +267,164 @@ class _ProductpageState extends State<Productpage> {
                                           height: 20,
                                         ),
                                         Column(
-                                          children: [],
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Select Size",
+                                                  style: appstyle(
+                                                      20,
+                                                      Colors.black,
+                                                      FontWeight.w600),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  "View size guide",
+                                                  style: appstyle(
+                                                      20,
+                                                      Colors.grey,
+                                                      FontWeight.w600),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            SizedBox(
+                                              height: 40,
+                                              child: ListView.builder(
+                                                  itemCount: productNotifier
+                                                      .shoeSizes.length,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  padding: EdgeInsets.zero,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    final sizes =
+                                                        productNotifier
+                                                            .shoeSizes[index];
+
+                                                    return Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 8.0),
+                                                      child: ChoiceChip(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(60),
+                                                          side:
+                                                              const BorderSide(
+                                                            color: Colors.black,
+                                                            width: 1,
+                                                            style: BorderStyle
+                                                                .solid,
+                                                          ),
+                                                        ),
+                                                        disabledColor:
+                                                            Colors.white,
+                                                        label: Text(
+                                                          sizes['size'],
+                                                          style: appstyle(
+                                                              18,
+                                                              sizes['isSelected']
+                                                                  ? Colors.white
+                                                                  : Colors
+                                                                      .black,
+                                                              FontWeight.w500),
+                                                        ),
+                                                        selectedColor:
+                                                            Colors.black,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 8.0),
+                                                        selected:
+                                                            sizes['isSelected'],
+                                                        onSelected: (newState) {
+                                                          if (productNotifier
+                                                              .sizes
+                                                              .contains(sizes[
+                                                                  'size'])) {
+                                                            productNotifier
+                                                                .sizes
+                                                                .remove(sizes[
+                                                                    'size']);
+                                                          } else {
+                                                            productNotifier
+                                                                .sizes
+                                                                .add(sizes[
+                                                                    'size']);
+                                                          }
+                                                          productNotifier
+                                                              .toggleCheck(
+                                                                  index);
+                                                        },
+                                                      ),
+                                                    );
+                                                  }),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        const Divider(
+                                          indent: 10,
+                                          endIndent: 10,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.8,
+                                          child: Text(
+                                            sneaker.title,
+                                            style: appstyle(26, Colors.black,
+                                                FontWeight.w700),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          sneaker.description,
+                                          textAlign: TextAlign.justify,
+                                          maxLines: 4,
+                                          style: appstyle(14, Colors.black,
+                                              FontWeight.normal),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 12),
+                                            child: CheckoutButton(
+                                              onTap: () async {
+                                                _createCart({
+                                                  "id": sneaker.id,
+                                                  "name": sneaker.name,
+                                                  "category": sneaker.category,
+                                                  "imageUrl":
+                                                      sneaker.imageUrl[0],
+                                                  "price": sneaker.price,
+                                                  "qty": 1,
+                                                });
+                                                productNotifier.sizes.clear();
+                                                Navigator.pop(context);
+                                              },
+                                              label: "Add to Bag",
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:online_shop/controllers/product_provider.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/shared/new_shoes.dart';
 import 'package:online_shop/views/shared/product_card.dart';
 import 'package:online_shop/views/ui/product_by_cart.dart';
 import 'package:online_shop/views/ui/product_page.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/sneaker_model.dart';
 
@@ -17,8 +19,10 @@ class HomeWidget extends StatelessWidget {
 
   final Future<List<Sneakers>> _male;
   final int tabIndex;
+
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
     return Column(
       children: [
         SizedBox(
@@ -39,6 +43,8 @@ class HomeWidget extends StatelessWidget {
                     final shoe = snapshot.data![index];
                     return GestureDetector(
                       onTap: () {
+                        productNotifier.shoesSizes = shoe.sizes;
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
