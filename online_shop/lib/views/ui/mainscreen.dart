@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:online_shop/controllers/mainscreen_provider.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/ui/cartpage.dart';
+import 'package:online_shop/views/ui/favorites.dart';
 import 'package:online_shop/views/ui/homepage.dart';
 import 'package:online_shop/views/ui/product_by_cart.dart';
 import 'package:online_shop/views/ui/profile.dart';
@@ -18,7 +19,7 @@ class MainScreen extends StatelessWidget {
   List<Widget> pageList = [
     const HomePage(),
     const SearchPage(),
-    const HomePage(),
+    const Favorites(),
     CartPage(),
     const ProfilePage()
   ];

@@ -1,6 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:online_shop/models/constants.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
+import 'package:online_shop/views/ui/favorites.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(
@@ -22,6 +27,31 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  final _favBox = Hive.box("fav_box");
+
+  Future<void> _createfav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+
+      return {
+        "key": key,
+        "id": "id",
+      };
+    }).toList();
+
+    favor = favData.toList();
+    ids = favor.map((item) => item['id']).toList();
+
+    setState(() {
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool selected = true;
@@ -59,8 +89,25 @@ class _ProductCardState extends State<ProductCard> {
                     right: 10,
                     top: 10,
                     child: GestureDetector(
-                      onTap: null,
-                      child: Icon(MaterialCommunityIcons.heart_outline),
+                      onTap: () async {
+                        if (ids.contains(widget.id)) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Favorites()));
+                        } else {
+                          _createfav({
+                            "id": widget.id,
+                            "name": widget.name,
+                            "category": widget.category,
+                            "price": widget.price,
+                            "imageUrl": widget.image,
+                          });
+                        }
+                      },
+                      child: ids.contains(widget.id)
+                          ? Icon(AntDesign.heart)
+                          : Icon(AntDesign.hearto),
                     ),
                   ),
                 ],

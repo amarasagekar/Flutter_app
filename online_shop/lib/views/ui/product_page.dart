@@ -6,7 +6,9 @@ import 'package:hive/hive.dart';
 import 'package:online_shop/controllers/product_provider.dart';
 import 'package:online_shop/services/helper.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
+import 'package:online_shop/views/ui/favorites.dart';
 import 'package:provider/provider.dart';
+import 'package:online_shop/models/constants.dart';
 
 import '../../models/sneaker_model.dart';
 import '../shared/checkout_btn.dart';
@@ -24,6 +26,7 @@ class Productpage extends StatefulWidget {
 class _ProductpageState extends State<Productpage> {
   final PageController pageController = PageController();
   final _cartBox = Hive.box('cart_box');
+  final _favBox = Hive.box('fav_box');
 
   late Future<Sneakers> _sneaker;
 
@@ -39,6 +42,27 @@ class _ProductpageState extends State<Productpage> {
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {
     await _cartBox.add(newCart);
+  }
+
+  Future<void> _createfav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+
+      return {
+        "key": key,
+        "id": "id",
+      };
+    }).toList();
+
+    favor = favData.toList();
+    ids = favor.map((item) => item['id']).toList();
+
+    setState(() {});
   }
 
   @override
@@ -131,9 +155,32 @@ class _ProductpageState extends State<Productpage> {
                                                   .height *
                                               0.1,
                                           right: 20,
-                                          child: Icon(
-                                            AntDesign.hearto,
-                                            color: Colors.grey,
+                                          child: Consumer<FavoritesNotifier>(
+                                            builder: (context,
+                                                favoritesNotifier, child) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  if (ids.contains(widget.id)) {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Favorites()));
+                                                  } else {
+                                                    _createfav({
+                                                      "id": sneaker.id,
+                                                      "name": sneaker.name,
+                                                      "category":sneaker.category,
+                                                      "price" : sneaker.price,
+                                                      "imageUrl": sneaker.imageUrl[0],
+                                                    });
+                                                  }
+                                                },
+                                                child: ids.contains(sneaker.id)
+                                                    ? Icon(AntDesign.heart)
+                                                    : Icon(AntDesign.hearto),
+                                              );
+                                            },
                                           ),
                                         ),
                                         Positioned(
