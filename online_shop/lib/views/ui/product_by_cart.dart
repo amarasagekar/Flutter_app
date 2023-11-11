@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:online_shop/controllers/product_provider.dart';
 import 'package:online_shop/views/shared/category_btn.dart';
 import 'package:online_shop/views/shared/custom_spacer.dart';
 import 'package:online_shop/views/shared/stagger_tile.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/sneaker_model.dart';
 import '../../services/helper.dart';
@@ -25,38 +27,31 @@ class _ProductByCartState extends State<ProductByCart>
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
   @override
   void initState() {
     super.initState();
-    getMale();
-    getFemale();
-    getKids();
+    _tabController.animateTo(widget.tabIndex, curve: Curves.easeIn);
   }
 
-  List<String> brand = [
-    "assets/images/adidas.png",
-    "assets/images/gucci.png",
-    "assets/images/jordan.png",
-    "assets/images/nike.png",
-  ];
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  // List<String> brand = [
+  //   "assets/images/adidas.png",
+  //   "assets/images/gucci.png",
+  //   "assets/images/jordan.png",
+  //   "assets/images/nike.png",
+  // ];
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getFemale();
+    productNotifier.getMale();
+    productNotifier.getKids();
+
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
@@ -136,9 +131,9 @@ class _ProductByCartState extends State<ProductByCart>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    latestShoe(male: _male),
-                    latestShoe(male: _female),
-                    latestShoe(male: _kids),
+                    latestShoe(male: productNotifier.male),
+                    latestShoe(male: productNotifier.female),
+                    latestShoe(male: productNotifier.kids),
                   ],
                 ),
               ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../models/sneaker_model.dart';
+import '../services/helper.dart';
+
 class ProductNotifier extends ChangeNotifier {
   int _activePage = 0;
   List<dynamic> _shoeSizes = [];
   List<String> _sizes = [];
+late Future<Sneakers> sneaker;
 
   int get activepage => _activePage;
 
@@ -32,5 +36,33 @@ class ProductNotifier extends ChangeNotifier {
   set sizes(List<String> newSizes) {
     _sizes = newSizes;
     notifyListeners();
+  }
+
+
+
+  late Future<List<Sneakers>> male;
+  late Future<List<Sneakers>> female;
+  late Future<List<Sneakers>> kids;
+
+  void getMale() {
+    male = Helper().getMaleSneakers();
+  }
+
+  void getFemale() {
+    female = Helper().getFemaleSneakers();
+  }
+
+  void getKids() {
+    kids = Helper().getKidsSneakers();
+  }
+
+  void getShoes(String category, String id) {
+    if (category == "Men's Running") {
+      sneaker = Helper().getMaleSneakersById(id);
+    } else if (category == "Women's Running") {
+      sneaker = Helper().getFemaleSneakersById(id);
+    } else {
+      sneaker = Helper().getKidsSneakersById(id);
+    }
   }
 }

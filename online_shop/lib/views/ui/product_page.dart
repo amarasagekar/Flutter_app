@@ -2,13 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive/hive.dart';
+import 'package:online_shop/controllers/cart_provider.dart';
+import 'package:online_shop/controllers/favorites_provider.dart';
 import 'package:online_shop/controllers/product_provider.dart';
-import 'package:online_shop/services/helper.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/ui/favorites.dart';
 import 'package:provider/provider.dart';
-import 'package:online_shop/models/constants.dart';
 
 import '../../models/sneaker_model.dart';
 import '../shared/checkout_btn.dart';
@@ -25,57 +24,18 @@ class Productpage extends StatefulWidget {
 
 class _ProductpageState extends State<Productpage> {
   final PageController pageController = PageController();
-  final _cartBox = Hive.box('cart_box');
-  final _favBox = Hive.box('fav_box');
-
-  late Future<Sneakers> _sneaker;
-
-  void getShoes() {
-    if (widget.category == "Men's Running") {
-      _sneaker = Helper().getMaleSneakersById(widget.id);
-    } else if (widget.category == "Women's Running") {
-      _sneaker = Helper().getFemaleSneakersById(widget.id);
-    } else {
-      _sneaker = Helper().getKidsSneakersById(widget.id);
-    }
-  }
-
-  Future<void> _createCart(Map<String, dynamic> newCart) async {
-    await _cartBox.add(newCart);
-  }
-
-  Future<void> _createfav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-    getFavorites();
-  }
-
-  getFavorites() {
-    final favData = _favBox.keys.map((key) {
-      final item = _favBox.get(key);
-
-      return {
-        "key": key,
-        "id": "id",
-      };
-    }).toList();
-
-    favor = favData.toList();
-    ids = favor.map((item) => item['id']).toList();
-
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getShoes();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getShoes(widget.category, widget.id);
+    var cartNotifier = Provider.of<CartProvider>(context);
+    var favoritesNotifier =
+        Provider.of<FavouritesNotifier>(context, listen: true);
+    favoritesNotifier.getFavorites();
+
     return Scaffold(
       body: FutureBuilder<Sneakers>(
-        future: _sneaker,
+        future: productNotifier.sneaker,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -155,28 +115,34 @@ class _ProductpageState extends State<Productpage> {
                                                   .height *
                                               0.1,
                                           right: 20,
-                                          child: Consumer<FavoritesNotifier>(
+                                          child: Consumer<FavouritesNotifier>(
                                             builder: (context,
                                                 favoritesNotifier, child) {
                                               return GestureDetector(
                                                 onTap: () {
-                                                  if (ids.contains(widget.id)) {
+                                                  if (favoritesNotifier.ids
+                                                      .contains(widget.id)) {
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 Favorites()));
                                                   } else {
-                                                    _createfav({
+                                                    favoritesNotifier
+                                                        .createfav({
                                                       "id": sneaker.id,
                                                       "name": sneaker.name,
-                                                      "category":sneaker.category,
-                                                      "price" : sneaker.price,
-                                                      "imageUrl": sneaker.imageUrl[0],
+                                                      "category":
+                                                          sneaker.category,
+                                                      "price": sneaker.price,
+                                                      "imageUrl":
+                                                          sneaker.imageUrl[0],
                                                     });
                                                   }
+                                                  setState(() {});
                                                 },
-                                                child: ids.contains(sneaker.id)
+                                                child: favoritesNotifier.ids
+                                                        .contains(sneaker.id)
                                                     ? Icon(AntDesign.heart)
                                                     : Icon(AntDesign.hearto),
                                               );
@@ -457,7 +423,7 @@ class _ProductpageState extends State<Productpage> {
                                             padding: EdgeInsets.only(top: 12),
                                             child: CheckoutButton(
                                               onTap: () async {
-                                                _createCart({
+                                                cartNotifier.createCart({
                                                   "id": sneaker.id,
                                                   "name": sneaker.name,
                                                   "category": sneaker.category,

@@ -1,10 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:online_shop/controllers/favorites_provider.dart';
+import 'package:online_shop/controllers/product_provider.dart';
 import 'package:online_shop/models/sneaker_model.dart';
 import 'package:online_shop/services/helper.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/shared/product_card.dart';
+import 'package:online_shop/views/shared/reuseable_text.dart';
+import 'package:provider/provider.dart';
 
 import '../shared/home_widget.dart';
 import '../shared/new_shoes.dart';
@@ -20,41 +26,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getKids();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getFemale();
+    productNotifier.getKids();
+    productNotifier.getMale();
+
+    var favoritesNotifier = Provider.of<FavouritesNotifier>(context);
+    favoritesNotifier.getFavorites();
+
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: 812.h,
+        width: 375.w,
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
-              height: MediaQuery.of(context).size.height * 0.4,
+              padding:  EdgeInsets.fromLTRB(16.w, 45.h, 0, 0),
+              height: 325.h,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/top_image.png"),
@@ -62,18 +53,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
               child: Container(
-                padding: const EdgeInsets.only(left: 8, bottom: 15),
-                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(left: 8.w, bottom: 15.h),
+                width: 375.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Athletics Shoes",
+                    reusableText(
+                      text: "Athletics Shoes",
                       style: appstyleWithHt(
                           42, Colors.white, FontWeight.bold, 1.5),
                     ),
-                    Text(
-                      "Collection",
+                    reusableText(
+                      text:"Collection",
                       style: appstyleWithHt(
                           42, Colors.white, FontWeight.bold, 1.2),
                     ),
@@ -111,15 +102,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   controller: _tabController,
                   children: [
                     HomeWidget(
-                      male: _male,
+                      male: productNotifier.male,
                       tabIndex: 0,
                     ),
                     HomeWidget(
-                      male: _female,
+                      male: productNotifier.female,
                       tabIndex: 1,
                     ),
                     HomeWidget(
-                      male: _kids,
+                      male: productNotifier.kids,
                       tabIndex: 2,
                     ),
                   ],
