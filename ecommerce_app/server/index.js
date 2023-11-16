@@ -1,12 +1,30 @@
+//Import form package
 const express = require("express");
+const mongoose = require("mongoose");
 
+//Import form other class
+const authRouter = require("./routes/auth");
+
+//init
 const PORT = 3000;
-
 const app = express();
-//Createing an API
-//GET, PUT, POST, DELETE, UPDATE -> CRUD
+const DB =
+  "mongodb+srv://immortal:FESVt8Xyr4Dv9k29@cluster0.wfivrjs.mongodb.net/?retryWrites=true&w=majority";
+
+//middleware
+app.use(express.json());
+app.use(authRouter);
+
+//connection
+mongoose
+  .connect(DB)
+  .then(() => {
+    console.log("Connection successfull");
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`connected at port ${PORT}`);
+  console.log(`connected at port ${PORT}`);
 });
-
