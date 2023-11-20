@@ -1,8 +1,9 @@
-import 'dart:js';
+import 'package:path/path.dart' as Path;
 
 import 'package:ecommerce_app/constants/global_variables.dart';
 import 'package:ecommerce_app/features/auth/screens/auth_screen.dart';
 import 'package:ecommerce_app/features/auth/services/auth_service.dart';
+import 'package:ecommerce_app/features/home/screens/home_screen.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:ecommerce_app/router.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +32,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    authService.getUserData(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       title: 'Amazon Clone',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
@@ -47,8 +50,12 @@ class _MyAppState extends State<MyApp> {
           iconTheme: IconThemeData(color: Colors.black),
         ),
       ),
+      
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: AuthScreen(),
+      
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const HomeScreen()
+          : const AuthScreen(),
     );
   }
 }
