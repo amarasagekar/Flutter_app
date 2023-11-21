@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecommerce_app/common/widgets/bottom_bar.dart';
 import 'package:ecommerce_app/constants/error_handling.dart';
 import 'package:ecommerce_app/constants/global_variables.dart';
 import 'package:ecommerce_app/constants/utils.dart';
@@ -84,7 +85,7 @@ class AuthService {
           if (!context.mounted) return;
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },
