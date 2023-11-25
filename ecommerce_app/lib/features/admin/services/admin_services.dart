@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:ecommerce_app/constants/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,17 @@ class AdminServices {
     required String category,
     required List<File> images,
   }) async {
-    try {} catch (e) {
+    try {
+      final cloudinary = CloudinaryPublic('dzsimlmsu', 'nhuff4eg');
+      List<String> imageUrls = [];
+
+      for (int i = 0; i < images.length; i++) {
+        CloudinaryResponse res = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(images[i].path, folder: name),
+        );
+        imageUrls.add(res.secureUrl);
+      }
+    } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
