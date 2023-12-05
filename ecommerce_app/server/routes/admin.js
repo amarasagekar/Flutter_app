@@ -34,7 +34,7 @@ adminRouter.get("/admin/get-products", admin, async (req, res) => {
 });
 
 //delete the products
-adminRouter.post("admin/delete-product", admin, async (req, res) => {
+adminRouter.post("/admin/delete-product", admin, async (req, res) => {
   try {
     const { id } = req.body;
     let product = await Product.findByIdAndDelete(id);
