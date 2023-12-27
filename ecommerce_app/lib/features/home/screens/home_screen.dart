@@ -2,6 +2,7 @@ import 'package:ecommerce_app/features/home/widgets/address_box.dart';
 import 'package:ecommerce_app/features/home/widgets/carousel_image.dart';
 import 'package:ecommerce_app/features/home/widgets/deal_of_day.dart';
 import 'package:ecommerce_app/features/home/widgets/top_categories.dart';
+import 'package:ecommerce_app/features/search/screens/search_screen.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +18,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void navigateToSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routename, arguments: query);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -41,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(7),
                     elevation: 1,
                     child: TextFormField(
+                      onFieldSubmitted: navigateToSearchScreen,
                       decoration: InputDecoration(
                         prefixIcon: InkWell(
                           onTap: () {},

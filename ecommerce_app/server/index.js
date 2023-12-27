@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 //Import form other class
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const productRouter = require("./routes/product");
 
 //init
 const PORT = 3000;
@@ -16,6 +17,8 @@ const DB =
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
+app.use(productRouter);
+
 //connection
 mongoose
   .connect(DB)
