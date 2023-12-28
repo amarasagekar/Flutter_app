@@ -1,38 +1,19 @@
-import 'package:ecommerce_app/features/home/widgets/address_box.dart';
-import 'package:ecommerce_app/features/search/services/search_services.dart';
-import 'package:ecommerce_app/features/search/widget/searched_product.dart';
-import 'package:ecommerce_app/models/product.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/loader.dart';
 import '../../../constants/global_variables.dart';
+import '../../../models/product.dart';
+import '../../search/screens/search_screen.dart';
 
-class SearchScreen extends StatefulWidget {
-  static const String routename = '/search-screen';
-  final String searchQuery;
-
-  const SearchScreen({super.key, required this.searchQuery});
+class ProductDetailScreen extends StatefulWidget {
+  static const String routeName = '/product-details';
+  final Product product;
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  List<Product>? products;
-  final SearchServices searchServices = SearchServices();
-  @override
-  void initState() {
-    super.initState();
-    fetchSearchedProduct();
-  }
-
-  fetchSearchedProduct() async {
-    products = await searchServices.fetchSearchedProducts(
-        context: context, searchQuery: widget.searchQuery);
-
-    setState(() {});
-  }
-
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routename, arguments: query);
   }
@@ -112,26 +93,13 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: products == null
-          ? const Loader()
-          : Column(
-              children: [
-                const AddressBox(),
-                const SizedBox(
-                  height: 30,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: products!.length,
-                    itemBuilder: (context, index) {
-                      return SearchProduct(
-                        product: products![index],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          //7:09:30
+        ],
+      ),
+    ),
     );
   }
 }
