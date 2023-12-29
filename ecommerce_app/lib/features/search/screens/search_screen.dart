@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/features/home/widgets/address_box.dart';
+import 'package:ecommerce_app/features/product_details/screens/product_details_screen.dart';
 import 'package:ecommerce_app/features/search/services/search_services.dart';
 import 'package:ecommerce_app/features/search/widget/searched_product.dart';
 import 'package:ecommerce_app/models/product.dart';
@@ -124,8 +125,17 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: ListView.builder(
                     itemCount: products!.length,
                     itemBuilder: (context, index) {
-                      return SearchProduct(
-                        product: products![index],
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ProductDetailScreen.routeName,
+                            arguments: products![index],
+                          );
+                        },
+                        child: SearchProduct(
+                          product: products![index],
+                        ),
                       );
                     },
                   ),
