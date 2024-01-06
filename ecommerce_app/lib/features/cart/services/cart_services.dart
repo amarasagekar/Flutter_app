@@ -13,53 +13,19 @@ import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
 import '../../../providers/user_provider.dart';
 
-class ProductDetailsServices {
-  void addToCart({
+class CartServices {
+  void removeFromCart({
     required BuildContext context,
     required Product product,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/api/add-to-cart'),
+      http.Response res = await http.delete(
+        Uri.parse('$uri/api/remove-from-cart/${product.id}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
-        body: jsonEncode({
-          'id': product.id!,
-        }),
-      );
-
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () {
-            User.fromMap(jsonDecode(res.body));
-          });
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
-  }
-
-  void rateProduct({
-    required BuildContext context,
-    required Product product,
-    required double rating,
-  }) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/api/rate-product'),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
-        },
-        body: jsonEncode({
-          'id': product.id!,
-          'rating': rating,
-        }),
       );
 
       // ignore: use_build_context_synchronously
