@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:ecommerce_app/features/auth/screens/auth_screen.dart';
 import 'package:ecommerce_app/models/order.dart';
 import 'package:ecommerce_app/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
@@ -44,5 +46,20 @@ class AccountServices {
     }
     return orderList;
   }
-}
 
+  //logout
+  void logOut(BuildContext context) async {
+    try {
+      SharedPreferences sharedPredernace =
+          await SharedPreferences.getInstance();
+      await sharedPredernace.setString("x-auth-token", "");
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AuthScreen.routeName,
+        (route) => false,
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+}
